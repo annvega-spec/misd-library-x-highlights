@@ -58,20 +58,48 @@ def lookup_user_id(handle: str, token: str, cache: dict):
     return None
 
 
+def media_urls_from_response(tweet: dict, includes: dict) -> list:
+    """Collect photo/video preview URLs for a tweet from expansions."""
+    media_by_key = {}
+    for m in (includes or {}).get("media") or []:
+        key = m.get("media_key")
+        if key:
+            media_by_key[key] = m
+    urls = []
+    keys = ((tweet.get("attachments") or {}).get("media_keys")) or []
+    for key in keys:
+        m = media_by_key.get(key) or {}
+        mtype = m.get("type")
+        if mtype == "photo":
+            u = m.get("url") or m.get("preview_image_url")
+            if u:
+                urls.append(u)
+        elif mtype in ("video", "animated_gif"):
+            u = m.get("preview_image_url") or m.get("url")
+            if u:
+                urls.append(u)
+    return urls
+
+
 def latest_tweet(user_id: str, token: str):
     params = urllib.parse.urlencode(
         {
             "max_results": "5",
             "exclude": "replies,retweets",
-            "tweet.fields": "created_at,text,public_metrics",
+            "tweet.fields": "created_at,text,public_metrics,attachments,entities",
+            "expansions": "attachments.media_keys",
+            "media.fields": "url,preview_image_url,type,width,height,alt_text",
         }
     )
     params2 = urllib.parse.urlencode(
         {
             "max_results": "5",
-            "tweet.fields": "created_at,text,public_metrics",
+            "tweet.fields": "created_at,text,public_metrics,attachments,entities",
+            "expansions": "attachments.media_keys",
+            "media.fields": "url,preview_image_url,type,width,height,alt_text",
         }
     )
+    last = None
     for params_s in (params, params2):
         for base in APIS:
             try:
@@ -79,17 +107,24 @@ def latest_tweet(user_id: str, token: str):
                 rows = data.get("data") or []
                 if not rows:
                     continue
-                t = rows[0]
+                # Prefer a tweet that has media when available in the batch
+                includes = data.get("includes") or {}
+                chosen = rows[0]
+                for t in rows:
+                    if ((t.get("attachments") or {}).get("media_keys")):
+                        chosen = t
+                        break
                 return {
-                    "id": t.get("id"),
-                    "text": t.get("text"),
-                    "created_at": t.get("created_at"),
-                    "url": "https://x.com/i/web/status/%s" % t.get("id"),
+                    "id": chosen.get("id"),
+                    "text": chosen.get("text"),
+                    "created_at": chosen.get("created_at"),
+                    "url": "https://x.com/i/web/status/%s" % chosen.get("id"),
+                    "media": media_urls_from_response(chosen, includes),
                 }
             except Exception as ex:
                 last = ex
                 continue
-    print("WARN: tweets for %s failed" % user_id, file=sys.stderr)
+    print("WARN: tweets for %s failed: %s" % (user_id, last), file=sys.stderr)
     return None
 
 

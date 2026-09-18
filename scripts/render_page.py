@@ -32,13 +32,25 @@ def main():
         row = by_handle.get(h.lower()) or {}
         post = row.get("post") or {}
         profile = "https://x.com/%s" % h
-        if post.get("text"):
+        if post.get("text") or post.get("media"):
             created = (post.get("created_at") or "")[:16].replace("T", " ")
+            media_html = ""
+            for i, mu in enumerate((post.get("media") or [])[:2]):
+                media_html += (
+                    '<div class="tweet-media"><img src="%s" alt="Post image %s" loading="lazy" /></div>'
+                    % (esc(mu), i + 1)
+                )
             body = (
+                '%s'
                 '<p class="tweet-text">%s</p>'
                 '<div class="tweet-meta">%s UTC</div>'
                 '<a class="btn" href="%s" target="_blank" rel="noopener noreferrer">View on X</a>'
-            ) % (esc(post.get("text")), esc(created), esc(post.get("url") or profile))
+            ) % (
+                media_html,
+                esc(post.get("text") or ""),
+                esc(created),
+                esc(post.get("url") or profile),
+            )
         else:
             err = row.get("error") or "awaiting_api"
             if not data.get("updated") or err == "awaiting_api":
@@ -96,6 +108,8 @@ def main():
     .tweet-text { margin:0; font-size:.88rem; line-height:1.4; white-space:pre-wrap; }
     .tweet-text.muted { color:var(--muted); }
     .tweet-meta { font-size:.72rem; color:var(--muted); }
+    .tweet-media { width:100%; border-radius:8px; overflow:hidden; background:#0d0d0d; }
+    .tweet-media img { display:block; width:100%; height:auto; max-height:220px; object-fit:cover; }
     .btn { display:inline-block; align-self:flex-start; margin-top:auto; padding:8px 14px; border-radius:999px; background:var(--gold); color:#000 !important; font-weight:800; font-size:.8rem; text-decoration:none !important; }
     .x-footer { text-align:center; padding:12px; font-size:.72rem; color:#888; border-top:1px solid rgba(255,192,0,.2); }
   </style>
