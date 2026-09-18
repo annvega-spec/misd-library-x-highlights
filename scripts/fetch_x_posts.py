@@ -81,39 +81,51 @@ def media_urls_from_response(tweet: dict, includes: dict) -> list:
     return urls
 
 
+def is_retweet(tweet: dict) -> bool:
+    for ref in tweet.get("referenced_tweets") or []:
+        if ref.get("type") == "retweeted":
+            return True
+    text = tweet.get("text") or ""
+    return text.startswith("RT @")
+
+
 def latest_tweet(user_id: str, token: str):
+    # Do NOT exclude "replies" — X treats posts that start with @mention as replies,
+    # which drops real highlight posts (e.g. "@bot has helped me...").
     params = urllib.parse.urlencode(
         {
-            "max_results": "5",
-            "exclude": "replies,retweets",
-            "tweet.fields": "created_at,text,public_metrics,attachments,entities",
+            "max_results": "10",
+            "exclude": "retweets",
+            "tweet.fields": "created_at,text,public_metrics,attachments,entities,referenced_tweets",
             "expansions": "attachments.media_keys",
             "media.fields": "url,preview_image_url,type,width,height,alt_text",
         }
     )
-    params2 = urllib.parse.urlencode(
+    params_fallback = urllib.parse.urlencode(
         {
-            "max_results": "5",
-            "tweet.fields": "created_at,text,public_metrics,attachments,entities",
+            "max_results": "10",
+            "tweet.fields": "created_at,text,public_metrics,attachments,entities,referenced_tweets",
             "expansions": "attachments.media_keys",
             "media.fields": "url,preview_image_url,type,width,height,alt_text",
         }
     )
     last = None
-    for params_s in (params, params2):
+    for params_s in (params, params_fallback):
         for base in APIS:
             try:
                 data = http_get("%s/users/%s/tweets?%s" % (base, user_id, params_s), token)
                 rows = data.get("data") or []
                 if not rows:
                     continue
-                # Prefer a tweet that has media when available in the batch
                 includes = data.get("includes") or {}
-                chosen = rows[0]
+                # Always pick the newest non-retweet (API returns newest first)
+                chosen = None
                 for t in rows:
-                    if ((t.get("attachments") or {}).get("media_keys")):
+                    if not is_retweet(t):
                         chosen = t
                         break
+                if not chosen:
+                    continue
                 return {
                     "id": chosen.get("id"),
                     "text": chosen.get("text"),
@@ -126,7 +138,6 @@ def latest_tweet(user_id: str, token: str):
                 continue
     print("WARN: tweets for %s failed: %s" % (user_id, last), file=sys.stderr)
     return None
-
 
 def main() -> int:
     token = os.environ.get("X_BEARER_TOKEN") or os.environ.get("TWITTER_BEARER_TOKEN")
