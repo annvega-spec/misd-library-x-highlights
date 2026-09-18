@@ -1,0 +1,84 @@
+{
+  "libraries": [
+    {
+      "name": "Librarian Garza",
+      "handle": "pdgarza31",
+      "id": "pd-garza-librarian"
+    },
+    {
+      "name": "Reynaldo Garza Elementary",
+      "handle": "Garza_Library",
+      "id": "reynaldo-garza-es"
+    },
+    {
+      "name": "Liz Recinos Library",
+      "handle": "LizRecinos2",
+      "id": "liz-recinos"
+    },
+    {
+      "name": "Jackson Elementary",
+      "handle": "ajacksonlibrary",
+      "id": "jackson-es"
+    },
+    {
+      "name": "Jackson Elementary",
+      "handle": "mrscontreras25",
+      "id": "jackson-es"
+    },
+    {
+      "name": "Ben Milam Elementary",
+      "handle": "bookladyramirez",
+      "id": "ben-milam-es"
+    },
+    {
+      "name": "Perez Elementary",
+      "handle": "PerezLibrary",
+      "id": "perez-es"
+    },
+    {
+      "name": "Rayburn Elementary",
+      "handle": "Rayburn_Readers",
+      "id": "rayburn-es"
+    },
+    {
+      "name": "Bronco Library",
+      "handle": "BroncoLibrary01",
+      "id": "bronco-library"
+    },
+    {
+      "name": "Seguin Elementary",
+      "handle": "klongoria10",
+      "id": "seguin-es"
+    },
+    {
+      "name": "Thigpen-Zavala / Hawk Library",
+      "handle": "TZHawkLibrary",
+      "id": "tz-hawks"
+    },
+    {
+      "name": "Brown Middle School",
+      "handle": "brownmslibrary",
+      "id": "brown-ms"
+    },
+    {
+      "name": "DeLeon Library Lions",
+      "handle": "librarianlopez",
+      "id": "dms-lions"
+    },
+    {
+      "name": "D. Gonzalez Library",
+      "handle": "DGonzalezSHSU",
+      "id": "dgonzalez"
+    },
+    {
+      "name": "Rowe High School Library",
+      "handle": "larisa_cantu",
+      "id": "rowe-hs"
+    },
+    {
+      "name": "Achieve Early College HS Library",
+      "handle": "AECHSLibrary",
+      "id": "aechs"
+    }
+  ]
+}
