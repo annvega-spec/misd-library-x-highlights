@@ -58,14 +58,29 @@ def lookup_user_id(handle: str, token: str, cache: dict):
     return None
 
 
-def media_urls_from_response(tweet: dict, includes: dict) -> list:
-    """Collect photo/video preview URLs for a tweet from expansions."""
+def best_mp4(variants):
+    """Pick highest bitrate mp4 from X media variants."""
+    best = None
+    best_br = -1
+    for v in variants or []:
+        if (v.get("content_type") or "") != "video/mp4":
+            continue
+        br = int(v.get("bit_rate") or 0)
+        url = v.get("url")
+        if url and br >= best_br:
+            best_br = br
+            best = url
+    return best
+
+
+def media_items_from_response(tweet: dict, includes: dict) -> list:
+    """Collect photo/video items. Videos include playable mp4 + poster."""
     media_by_key = {}
     for m in (includes or {}).get("media") or []:
         key = m.get("media_key")
         if key:
             media_by_key[key] = m
-    urls = []
+    items = []
     keys = ((tweet.get("attachments") or {}).get("media_keys")) or []
     for key in keys:
         m = media_by_key.get(key) or {}
@@ -73,12 +88,20 @@ def media_urls_from_response(tweet: dict, includes: dict) -> list:
         if mtype == "photo":
             u = m.get("url") or m.get("preview_image_url")
             if u:
-                urls.append(u)
+                items.append({"type": "photo", "url": u})
         elif mtype in ("video", "animated_gif"):
-            u = m.get("preview_image_url") or m.get("url")
-            if u:
-                urls.append(u)
-    return urls
+            poster = m.get("preview_image_url") or m.get("url")
+            mp4 = best_mp4(m.get("variants"))
+            if mp4:
+                items.append({
+                    "type": "video" if mtype == "video" else "gif",
+                    "url": mp4,
+                    "poster": poster,
+                })
+            elif poster:
+                # fallback still if variants missing
+                items.append({"type": "photo", "url": poster})
+    return items
 
 
 def is_retweet(tweet: dict) -> bool:
@@ -98,7 +121,7 @@ def latest_tweet(user_id: str, token: str):
             "exclude": "retweets",
             "tweet.fields": "created_at,text,public_metrics,attachments,entities,referenced_tweets",
             "expansions": "attachments.media_keys",
-            "media.fields": "url,preview_image_url,type,width,height,alt_text",
+            "media.fields": "url,preview_image_url,type,width,height,alt_text,variants,duration_ms",
         }
     )
     params_fallback = urllib.parse.urlencode(
@@ -106,7 +129,7 @@ def latest_tweet(user_id: str, token: str):
             "max_results": "10",
             "tweet.fields": "created_at,text,public_metrics,attachments,entities,referenced_tweets",
             "expansions": "attachments.media_keys",
-            "media.fields": "url,preview_image_url,type,width,height,alt_text",
+            "media.fields": "url,preview_image_url,type,width,height,alt_text,variants,duration_ms",
         }
     )
     last = None
@@ -131,7 +154,7 @@ def latest_tweet(user_id: str, token: str):
                     "text": chosen.get("text"),
                     "created_at": chosen.get("created_at"),
                     "url": "https://x.com/i/web/status/%s" % chosen.get("id"),
-                    "media": media_urls_from_response(chosen, includes),
+                    "media": media_items_from_response(chosen, includes),
                 }
             except Exception as ex:
                 last = ex

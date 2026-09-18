@@ -34,12 +34,29 @@ def main():
         profile = "https://x.com/%s" % h
         if post.get("text") or post.get("media"):
             created = (post.get("created_at") or "")[:16].replace("T", " ")
+
             media_html = ""
-            for i, mu in enumerate((post.get("media") or [])[:2]):
-                media_html += (
-                    '<div class="tweet-media"><img src="%s" alt="Post image %s" loading="lazy" /></div>'
-                    % (esc(mu), i + 1)
-                )
+            for i, item in enumerate((post.get("media") or [])[:2]):
+                # Support legacy string URLs and new {type,url,poster} objects
+                if isinstance(item, str):
+                    media_html += (
+                        '<div class="tweet-media"><img src="%s" alt="Post image %s" loading="lazy" /></div>'
+                        % (esc(item), i + 1)
+                    )
+                elif isinstance(item, dict) and item.get("type") in ("video", "gif") and item.get("url"):
+                    poster = item.get("poster") or ""
+                    loop = " loop" if item.get("type") == "gif" else ""
+                    media_html += (
+                        '<div class="tweet-media tweet-video">'
+                        '<video controls playsinline preload="metadata"%s poster="%s" src="%s">'
+                        "Sorry, your browser does not support embedded videos."
+                        "</video></div>"
+                    ) % (loop, esc(poster), esc(item.get("url")))
+                elif isinstance(item, dict) and item.get("url"):
+                    media_html += (
+                        '<div class="tweet-media"><img src="%s" alt="Post image %s" loading="lazy" /></div>'
+                        % (esc(item.get("url")), i + 1)
+                    )
             body = (
                 '%s'
                 '<p class="tweet-text">%s</p>'
@@ -109,7 +126,8 @@ def main():
     .tweet-text.muted { color:var(--muted); }
     .tweet-meta { font-size:.72rem; color:var(--muted); }
     .tweet-media { width:100%; border-radius:8px; overflow:hidden; background:#0d0d0d; }
-    .tweet-media img { display:block; width:100%; height:auto; max-height:220px; object-fit:cover; }
+    .tweet-media img, .tweet-media video { display:block; width:100%; height:auto; max-height:240px; object-fit:cover; }
+    .tweet-media video { object-fit:contain; background:#000; max-height:280px; }
     .btn { display:inline-block; align-self:flex-start; margin-top:auto; padding:8px 14px; border-radius:999px; background:var(--gold); color:#000 !important; font-weight:800; font-size:.8rem; text-decoration:none !important; }
     .x-footer { text-align:center; padding:12px; font-size:.72rem; color:#888; border-top:1px solid rgba(255,192,0,.2); }
   </style>
