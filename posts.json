@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T00:17:05.857646+00:00",
+  "updated": "2026-09-24T00:51:16.662732+00:00",
   "source": "x-api-v2",
   "posts": [
     {
@@ -209,17 +209,11 @@
       "library_id": "travis-library",
       "profile_url": "https://x.com/DGonzalezSHSU",
       "post": {
-        "id": "2102113151541993672",
-        "text": "Our talented students tried their hand at hojalata, traditional Mexican tin/foil art. We love seeing history and culture come alive. @annvega @esc1library @TerriersTravis https://t.co/Zrf00vrAqt",
-        "created_at": "2026-09-21T19:10:05.000Z",
-        "url": "https://x.com/i/web/status/2102113151541993672",
-        "media": [
-          {
-            "type": "video",
-            "url": "https://video.twimg.com/amplify_video/2102113106528739328/vid/avc1/720x1280/75UNYIF8pla9zDau.mp4",
-            "poster": "https://pbs.twimg.com/amplify_video_thumb/2102113106528739328/img/0mf4SpE2ar1MddWg.jpg"
-          }
-        ]
+        "id": "2102918789449044270",
+        "text": "That set up looks amazing! https://t.co/BciporsqIX",
+        "created_at": "2026-09-24T00:31:24.000Z",
+        "url": "https://x.com/i/web/status/2102918789449044270",
+        "media": []
       },
       "error": null
     },
