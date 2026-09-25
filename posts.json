@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25T14:42:51.431562+00:00",
+  "updated": "2026-09-25T15:11:32.936740+00:00",
   "source": "x-api-v2",
   "posts": [
     {
@@ -213,11 +213,28 @@
       "library_id": "travis-library",
       "profile_url": "https://x.com/DGonzalezSHSU",
       "post": {
-        "id": "2102918789449044270",
-        "text": "That set up looks amazing! https://t.co/BciporsqIX",
-        "created_at": "2026-09-24T00:31:24.000Z",
-        "url": "https://x.com/i/web/status/2102918789449044270",
-        "media": []
+        "id": "2103497696807968983",
+        "text": "Thank you McAllen Public Library for presenting to our Terriers! September is Library Card Sign-Up Month and we want our students to be informed! There are many wonderful programs and services available to students at our public library.@mcallenlibrary @annvega https://t.co/oFhMe7Gd3T",
+        "created_at": "2026-09-25T14:51:46.000Z",
+        "url": "https://x.com/i/web/status/2103497696807968983",
+        "media": [
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTEgASYXQAAkqEU.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTEgASdW8AAzfeF.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTEgASWWYAAOivJ.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTEgAScXsAAbuCl.jpg"
+          }
+        ]
       },
       "error": null
     },
