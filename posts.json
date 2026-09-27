@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-27T21:38:43.974802+00:00",
+  "updated": "2026-09-27T22:08:33.522589+00:00",
   "source": "x-api-v2",
   "posts": [
     {
@@ -90,11 +90,17 @@
       "library_id": "perez-es",
       "profile_url": "https://x.com/PerezLibrary",
       "post": {
-        "id": "1982222836702793988",
-        "text": "Attention P\u00e9rez Pioneers! \ud83d\udce3 The Book Fair is HERE! \ud83d\udce3 Open Oct. 27-Nov. 1.  Here\u2019s quick preview\u2026Enjoy!  \ud83c\udfa5 https://t.co/M28wiUiKvB \u2066@perezpioneers\u2069 #bookfair",
-        "created_at": "2025-10-25T23:08:46.000Z",
-        "url": "https://x.com/i/web/status/1982222836702793988",
-        "media": []
+        "id": "2104332297860153362",
+        "text": "Great news! \ud83d\udce2The BOOK FAIR IS HERE! \ud83c\udf89Starting tomorrow, Monday, Sept. 28 thru Saturday, Oct. 3.  Want a sneak peek?  \ud83d\udc40 See you at the Book Fair! \ud83d\udcda\ud83d\udc99\ud83d\udc9a #BookFair @Scholastic @perezpioneers https://t.co/XnsaFggHMO",
+        "created_at": "2026-09-27T22:08:11.000Z",
+        "url": "https://x.com/i/web/status/2104332297860153362",
+        "media": [
+          {
+            "type": "video",
+            "url": "https://video.twimg.com/amplify_video/2104331962743656448/vid/avc1/720x720/hst-uR2jIqvP9NeU.mp4?tag=14",
+            "poster": "https://pbs.twimg.com/amplify_video_thumb/2104331962743656448/img/mQo6c405kb5rXL1e.jpg"
+          }
+        ]
       },
       "error": null
     },
