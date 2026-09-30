@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T20:10:36.054727+00:00",
+  "updated": "2026-09-30T20:39:49.890361+00:00",
   "source": "x-api-v2",
   "posts": [
     {
@@ -211,11 +211,28 @@
       "library_id": "travis-library",
       "profile_url": "https://x.com/DGonzalezSHSU",
       "post": {
-        "id": "2105061395670643051",
-        "text": "Thank you for stopping by today! https://t.co/Eo8AUq6wbA",
-        "created_at": "2026-09-29T22:25:21.000Z",
-        "url": "https://x.com/i/web/status/2105061395670643051",
-        "media": []
+        "id": "2105394222602080549",
+        "text": "Before the month ends I would like to highlight some student work for Freedom Week. It was really great collaborating with our Social Studies teachers. @annvega https://t.co/YnLgAA27ev",
+        "created_at": "2026-09-30T20:27:53.000Z",
+        "url": "https://x.com/i/web/status/2105394222602080549",
+        "media": [
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTfc4pnXMAARJtx.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTfc4peXoAAu1xG.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTfc4pgXIAIklAp.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HTfc4phW0AAA4X3.jpg"
+          }
+        ]
       },
       "error": null
     },
