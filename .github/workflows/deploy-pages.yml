@@ -1,0 +1,50 @@
+# Deploy the static site with GitHub Actions instead of the built-in
+# "pages-build-deployment" workflow.
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One Pages deployment at a time. In-progress deploys finish; a newer
+# queued run replaces any older queued run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      # upload-pages-artifact always omits .git and .github. scripts/ is
+      # the fetch/render tooling, not part of the published site.
+      - name: Assemble site artifact
+        run: |
+          mkdir -p "${RUNNER_TEMP}/site"
+          cp index.html posts.json libraries-x.json "${RUNNER_TEMP}/site/"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ${{ runner.temp }}/site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
