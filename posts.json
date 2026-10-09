@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-09T16:27:38.144568+00:00",
+  "updated": "2026-10-09T16:55:30.244741+00:00",
   "source": "x-api-v2",
   "posts": [
     {
@@ -178,14 +178,22 @@
       "library_id": "brown-ms",
       "profile_url": "https://x.com/brownmslibrary",
       "post": {
-        "id": "2108220647738392897",
-        "text": "Our students are taking the time to read and log their minutes on Beanstack!  @beanstackapp @bmsdobies @annvega https://t.co/5VS8wzxGAQ",
-        "created_at": "2026-10-08T15:39:05.000Z",
-        "url": "https://x.com/i/web/status/2108220647738392897",
+        "id": "2108597729505009716",
+        "text": "Fun Friday in the library!  \ud83d\ude0aCome by and join us during your lunch period.  \ud83e\udde9\u265f\ufe0f@bmsdobies @annvega https://t.co/l8YIdBa5SB",
+        "created_at": "2026-10-09T16:37:29.000Z",
+        "url": "https://x.com/i/web/status/2108597729505009716",
         "media": [
           {
             "type": "photo",
-            "url": "https://pbs.twimg.com/media/HUHngAaXAAAqr4s.jpg"
+            "url": "https://pbs.twimg.com/media/HUM-c5hXsAA0EV4.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HUM-c5aXYAAkXra.jpg"
+          },
+          {
+            "type": "photo",
+            "url": "https://pbs.twimg.com/media/HUM-c5cXQAEk8yu.jpg"
           }
         ]
       },
